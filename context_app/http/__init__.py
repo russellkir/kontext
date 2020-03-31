@@ -1,4 +1,9 @@
+"""
+Shared helper functions
+"""
+
 import logging
+
 import requests
 
 logger = logging.getLogger(__name__)
@@ -21,7 +26,7 @@ def try_http(
     if func is None:
         raise NotImplementedError("%s is not a supported http action" % verb)
     try:
-        r = func(url, json=json, headers=headers, timeout=timeout)
+        r = func(url=url, data=json)
     except Exception as ex:
         logger.error("Error %sing %s: %s", verb.upper(), url, ex)
         return None
@@ -38,7 +43,6 @@ def try_http(
             return r.status_code
         else:
             return None
-
     # possible values here: json, text, status_code
     if response not in dir(r):
         raise NotImplementedError(
@@ -58,18 +62,6 @@ def try_get(url, **kwargs):
     if "success" not in kwargs:
         kwargs["success"] = (200,)
     return try_http("get", url, **kwargs)
-
-
-def try_put(url, **kwargs):
-    return try_http("put", url, **kwargs)
-
-
-def try_delete(url, **kwargs):
-    return try_http("delete", url, **kwargs)
-
-
-def try_patch(url, json, **kwargs):
-    return try_http("patch", url, json=json, **kwargs)
 
 
 def try_post(url, json, **kwargs):
