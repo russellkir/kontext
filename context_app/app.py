@@ -17,7 +17,7 @@ from zoomus import ZoomClient
 from context_app import zoom
 from context_app.api import blueprint as api
 
-USER_ID = "MigGUNgKSFKsmATXRoB22A"
+# USER_ID = "MigGUNgKSFKsmATXRoB22A"
 existing_rooms = []
 
 app = Flask("context_app", template_folder="templates")
@@ -51,12 +51,3 @@ def redirect():
 
 if __name__ == "__main__":
     app.run(host="::", port=5000, debug=False, threaded=True)
-
-    print("Kontext")
-    # client = zoom.ZoomClient(USER_ID)
-    # meeting = client.create_meeting()
-    # webbrowser.open(meeting["start_url"], new=2)
-    # print(client.list_meetings())
-    # print(client.list_live_meetings())
-    # print(meeting)
-    main()
