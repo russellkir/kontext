@@ -1,5 +1,11 @@
 from setuptools import setup
 
+
+def read_reqs(filename):
+    with open(filename) as f:
+        return [z.strip() for z in f.readlines() if not z.startswith("#")]
+
+
 setup(
     name="context_app",
     description="Context App",
@@ -7,11 +13,10 @@ setup(
     author="Russell Kirmayer",
     author_email="russellkir@gmail.com",
     packages=["context_app"],
-    include_package_data=True,
-    install_requires=["zoomus==1.1.1"],
+    install_requires=read_reqs("requirements.txt"),
     extras_require={
-        "test": ["codecov", "pytest==3.8.2", "pytest-cov==2.6.0", "requests==2.22.0"],
-        "dev": ["black", "pylint==2.2.2", "pep8==1.7.1"],
+        "prod": read_reqs("requirements.prod.txt"),
+        "test": read_reqs("requirements.test.txt"),
     },
     entry_points={
         "console_scripts": ["context_app = context_app.__main__:main"]
