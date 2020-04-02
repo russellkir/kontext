@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 
 def read_reqs(filename):
@@ -12,13 +12,11 @@ setup(
     version="0.0.1",
     author="Russell Kirmayer",
     author_email="russellkir@gmail.com",
-    packages=["context_app"],
+    packages=find_packages(),
     install_requires=read_reqs("requirements.txt"),
     extras_require={
         "prod": read_reqs("requirements.prod.txt"),
         "test": read_reqs("requirements.test.txt"),
     },
-    entry_points={
-        "console_scripts": ["context_app = context_app.__main__:main"]
-    },
+    entry_points={"console_scripts": ["context_app = context_app.app:main"]},
 )

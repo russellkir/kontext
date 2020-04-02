@@ -10,4 +10,4 @@ setup_venv
 echo "*** Updating runtime environment (this can take a minute)"
 loading_display "./venv/bin/pip3 install -U -e ."
 
-./venv/bin/context_app
+./venv/bin/context_app -m
