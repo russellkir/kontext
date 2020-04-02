@@ -1,7 +1,52 @@
 <html>
-  <head><title>Kontext</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width">
-    <script type="text/JavaScript" src="/static/jquery.min.js"></script>
-    <script type = "text/javascript" language = "javascript">
+
+<head>
+  <title>Kontext</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width">
+  <script type="text/JavaScript" src="/static/jquery.min.js"></script>
+  <script type="text/javascript" language="javascript">
+    $(document).ready(function () {
+      $('#zoom').show();
+      $('#zoom_config').show();
+      $("#zoom_config_form").submit(function (event) {
+        var cooked = { 'zoom': $('input[name=zoom_string]').val() };
+        // send via ajax
+        $.ajax({
+          url: '/api/v1/kontext/zoom',
+          type: 'POST',
+          dataType: 'json',
+          encode: true,
+          data: JSON.stringify(cooked),
+          contentType: "application/json; charset=utf-8",
+          success: function (result) {
+            $('#zoom').html('<p>' + 'Host ID entered: ' + cooked.zoom + '</p>');
+            $('#zoom').show();
+          },
+          error: function (xhr, resp, text) {
+            console.log(xhr, resp, text)
+            $('#zoom').html('<p>Error configuring zoom: ' + text + '</p>');
+            $('#zoom').show();
+          }
+        });
+        event.preventDefault();
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <img src='/static/favicon.png'>
+  <h1>Kontext</h1>
+  <div id="zoom" style="background-color:#eee;">Enter Zoom User ID</div>
+  <div id="zoom_config" style="display: none; background-color:#eee;">
+    <form id="zoom_config_form" action="/api/v1/kontext/zoom" method="post">
+      <input type="text" name="zoom_string" size="40" placeholder="Zoom User ID" />
+      <input type="submit" id="Zoom_config_submit" />
+    </form>
+  </div>
+
 </html>
+<!--
+# vi: ft=html
+-->
