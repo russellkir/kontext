@@ -1,4 +1,5 @@
 .vagrant
+pyvenv.cfg
 *.log
 secrets.*.yaml
 secrets.yaml
