@@ -2,6 +2,7 @@
 
 import json
 import webbrowser
+import requests
 from flask import abort
 from flask_restplus import fields, Namespace, Resource
 
@@ -23,7 +24,8 @@ class Zoom(Resource):
         try:
             client = zoom.ZoomClient(api.payload["zoom"])
             meeting = client.create_meeting()
-            webbrowser.open(meeting["start_url"], new=2)
+            webbrowser.open(meeting["start_url"])
+            r = requests.post(url="http://localhost:5000/create_redirect", data=meeting)
             return {"zoom": True}, 200
         except:
             abort(400, "Unable to launch zoom meeting")
